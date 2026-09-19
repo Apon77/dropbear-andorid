@@ -391,7 +391,7 @@ pty_setowner(struct passwd *pw, const char *tty_name)
 						tty_name, (unsigned int)pw->pw_uid, (unsigned int)gid,
 						strerror(errno));
 			} else {
-				dropbear_exit("chown(%.100s, %u, %u) failed: %.100s",
+				dropbear_log(LOG_WARNING, "chown(%.100s, %u, %u) failed: %.100s",
 				    tty_name, (unsigned int)pw->pw_uid, (unsigned int)gid,
 				    strerror(errno));
 			}
@@ -406,7 +406,7 @@ pty_setowner(struct passwd *pw, const char *tty_name)
 					"chmod(%.100s, 0%o) failed: %.100s",
 					tty_name, mode, strerror(errno));
 			} else {
-				dropbear_exit("chmod(%.100s, 0%o) failed: %.100s",
+				dropbear_log(LOG_WARNING, "chmod(%.100s, 0%o) failed: %.100s",
 				    tty_name, mode, strerror(errno));
 			}
 		}

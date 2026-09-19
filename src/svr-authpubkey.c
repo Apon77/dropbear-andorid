@@ -612,7 +612,21 @@ static int checkfileperm(char * filename) {
 	int badperm = 0;
 
 	TRACE(("enter checkfileperm(%s)", filename))
-
+			/* Android: system-owned parent dirs have fixed permissions by design */
+	{
+		static const char *skip[] = {
+			"/data", "/data/local", "/data/local/tmp", NULL
+		};
+		size_t fl = strlen(filename);
+		int i;
+		while (fl > 1 && filename[fl-1] == '/') fl--;   /* ignore trailing slash */
+		for (i = 0; skip[i] != NULL; i++) {
+			if (strlen(skip[i]) == fl && strncmp(filename, skip[i], fl) == 0) {
+				return DROPBEAR_SUCCESS;
+			}
+		}
+	}
+		
 	if (stat(filename, &filestat) != 0) {
 		TRACE(("leave checkfileperm: stat() != 0"))
 		return DROPBEAR_FAILURE;
