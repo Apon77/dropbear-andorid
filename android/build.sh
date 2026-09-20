@@ -11,6 +11,6 @@ make distclean >/dev/null 2>&1 || true        # the "make clean" step you needed
 ./configure --host=aarch64-linux-android --disable-zlib \
   --disable-utmp --disable-wtmp --disable-utmpx --disable-wtmpx \
   --disable-lastlog --disable-pututline --disable-pututxline
-make PROGRAMS="dropbear dropbearkey" -j"$(getconf _NPROCESSORS_ONLN)"
-"$STRIP" dropbear dropbearkey
+make PROGRAMS="dropbear dropbearkey dbclient scp" -j"$(getconf _NPROCESSORS_ONLN)"
+"$STRIP" dropbear dropbearkey dbclient scp
 file dropbear
